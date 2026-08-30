@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trinity Institute Of Technology</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Roboto:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --hero-zoom: 115%;
+    --hero-position: center 38%;
+    --hero-overlay-opacity: 0.60;
+
+    --navy-deep: #0c1c33;
+    --cream-bg: #eef1e3;
+    --about-bg: #EDF1E8;
+    --courses-tan: #F0DEC2;
+    --card-overlay-opacity: 0.55;
+    --ink: #231f20;
+    --ink-soft: #4b4f40;
+    --underline: #20231a;
+    --white: #ffffff;
+
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body: 'Roboto', sans-serif;
+    --font-inter: 'Inter', sans-serif;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    font-family: var(--font-body);
+    color: var(--ink);
+    background: var(--cream-bg);
+    line-height: 1.5;
+  }
+
+  img{ display:block; max-width:100%; }
+
+  a{ color:inherit; text-decoration:none; }
+
+  button{ font-family:inherit; cursor:pointer; }
+
+  /* ---------------------------------- SHARED SECTION HEADING ---------------------------------- */
+
+  .section-heading{ display:inline-block; }
+
+  .section-heading h2{
+    font-family: var(--font-display);
+    font-weight:500;
+    font-size: clamp(2rem, 3.2vw, 2.7rem);
+    color: var(--ink);
+  }
+  .section-heading::after{
+    content:"";
+    display:block;
+    width:46px;
+    height:2px;
+    margin-top:2px;
+    background: var(--underline);
+  }
+
+  /* ---------------------------------- NAVBAR ---------------------------------- */
+
+  .site-header{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 28px clamp(20px, 5vw, 64px);
+  }
+
+  .nav-group{
+    display:flex;
+    align-items:center;
+    gap: clamp(24px, 3vw, 48px);
+  }
+
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+
+  .logo-mark{
+    width:44px;
+    height:56px;
+    border-radius:2px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .logo-mark img{ width:100%; height:100%; object-fit:contain; }
+
+  .logo-text{
+    font-family: var(--font-display);
+    font-weight:600;
+    font-size: clamp(1.05rem, 1.4vw, 1.4rem);
+    color: var(--white);
+    letter-spacing:.02em;
+    white-space:nowrap;
+  }
+
+  .main-nav{
+    display:flex;
+    align-items:center;
+    gap: clamp(20px, 2.6vw, 40px);
+  }
+
+  .main-nav a{
+    font-family: var(--font-body);
+    font-weight:400;
+    font-size: .95rem;
+    letter-spacing:.01em;
+    color: var(--white);
+    padding-bottom: 6px;
+    position:relative;
+    transition: opacity .25s ease;
+  }
+
+  /* underline reserved only for the ACTIVE page — no hover-triggered line */
+  .main-nav a::after{
+    content:"";
+    position:absolute;
+    left:0; bottom:0;
+    width:100%;
+    height:1px;
+    background: var(--white);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .main-nav a.active::after{ transform: scaleX(1); }
+
+  .main-nav a:hover{ opacity:.75; }
+
+  .header-actions{
+    display:flex;
+    align-items:center;
+  }
+
+  /* ---------------------------------- BUTTONS ---------------------------------- */
+
+  .btn{
+    font-family: var(--font-body);
+    font-size:.9rem;
+    letter-spacing:.03em;
+    padding: 12px 26px;
+    border-radius: 2px;
+    display:inline-block;
+    transition: background-color .3s ease, color .3s ease, border-color .3s ease, transform .2s ease, box-shadow .3s ease;
+  }
+
+  .btn-outline-light{
+    background: transparent;
+    border: 1.5px solid var(--white);
+    color: var(--white);
+  }
+
+  .btn-outline-light:hover{
+    background: var(--white);
+    color: var(--navy-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0,0,0,.25);
+  }
+
+  .btn-outline-dark{
+    background: transparent;
+    border: 1.5px solid var(--ink);
+    color: var(--ink);
+  }
+
+  .btn-outline-dark:hover{
+    background: var(--ink);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0,0,0,.15);
+  }
+
+  .btn-outline-light:active,
+  .btn-outline-dark:active{ transform: translateY(0); }
+
+  /* ---------------------------------- HERO (parallax) ---------------------------------- */
+
+  .hero{
+    position:relative;
+    height: 92vh;
+    min-height: 640px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .hero-media{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    background-image: url('images/hero-home.png');
+    background-repeat: no-repeat;
+    background-size: var(--hero-zoom);
+    background-position: var(--hero-position);
+    background-attachment: fixed;
+  }
+
+  .hero-overlay{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background: #000;
+    opacity: var(--hero-overlay-opacity);
+  }
+
+  .hero-content{
+    position:relative;
+    z-index:2;
+    max-width: 1100px;
+    padding: 0 24px;
+    text-align:center;
+    color: var(--white);
+    margin-top: 10px;
+  }
+
+  .hero-content h1{
+    font-family: var(--font-display);
+    font-weight:500;
+    text-transform:uppercase;
+    letter-spacing: .04em;
+    line-height:1.08;
+    font-size: clamp(1.9rem, 6.4vw, 5.4rem);
+  }
+
+  .hero-content h1 span{
+    display:block;
+    white-space:nowrap;
+  }
+
+  .hero-content p{
+    max-width: 520px;
+    margin: 14px auto 22px;
+    font-size: .92rem;
+    font-weight:500;
+    line-height:1.55;
+    color: rgba(255,255,255,.92);
+  }
+
+  /* ---------------------------------- ABOUT ---------------------------------- */
+
+  .about{
+    position:relative;
+    z-index:2;              
+    background: var(--about-bg);
+    padding: 90px clamp(24px, 6vw, 80px) 110px;
+  }
+
+  .about-inner{
+    max-width: 1240px;
+    margin: 0 auto;
+    display:grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 60px;
+    align-items:start;
+  }
+
+  .about-copy p{
+    font-size: .98rem;
+    font-weight:400;
+    color: var(--ink);
+    line-height: 1.85;
+  }
+
+  .about-copy .btn{ margin-top: 30px; }
+
+  .about-gallery{
+    max-width: 1240px;
+    margin: 60px auto 0;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .gallery-item{
+    border:none;
+    padding:0;
+    background:none;
+    display:block;
+    width:100%;
+    aspect-ratio: 16 / 12.3;
+    overflow:hidden;
+    border-radius:2px;
+    cursor: zoom-in;
+  }
+
+  .gallery-item img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+  }
+
+  .gallery-item:focus-visible{ outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  /* ---------------------------------- LIGHTBOX ---------------------------------- */
+
+  .lightbox{
+    position:fixed;
+    inset:0;
+    z-index: 1000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 40px;
+    background: rgba(8,10,8,.9);
+    opacity:0;
+    visibility:hidden;
+    transition: opacity .3s ease, visibility 0s linear .3s;
+  }
+
+  .lightbox.is-open{
+    opacity:1;
+    visibility:visible;
+    transition: opacity .3s ease;
+  }
+
+  .lightbox img{
+    max-width:90vw;
+    max-height:85vh;
+    border-radius:2px;
+    box-shadow: 0 30px 80px rgba(0,0,0,.5);
+    transform: scale(.86);
+    opacity:0;
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s ease;
+  }
+
+  .lightbox.is-open img{
+    transform: scale(1);
+    opacity:1;
+  }
+
+  .lightbox-close{
+    position:absolute;
+    top:24px;
+    right:clamp(20px, 4vw, 40px);
+    background:none;
+    border:1.5px solid rgba(255,255,255,.6);
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    color:#fff;
+    font-size:1.4rem;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition: background-color .25s ease, transform .25s ease;
+  }
+
+  .lightbox-close:hover{
+    background: rgba(255,255,255,.15);
+    transform: rotate(90deg);
+  }
+
+  /* ---------------------------------- COURSES ---------------------------------- */
+
+  .courses{
+    position:relative;
+    z-index:2;
+    background: var(--white); 
+    overflow:hidden;
+    padding: 90px clamp(24px, 6vw, 80px) 0;
+  }
+
+  /* lower tan band that the card grid sits on top of/straddles */
+  .courses-bg-split{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height: 560px;
+    background: var(--courses-tan);
+    z-index:0;
+  }
+
+  .courses-inner{
+    position:relative;
+    z-index:1;
+    max-width: 1240px;
+    margin:0 auto;
+  }
+
+  .courses-header{
+    display:grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap:60px;
+    align-items:start;
+  }
+
+  .courses-copy p{
+    font-size: .98rem;
+    color: var(--ink);
+    line-height: 1.85;
+  }
+
+  .courses-copy .btn{ margin-top: 30px; }
+
+  .courses-grid{
+    margin-top: 64px;
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+
+  .courses-photo-wrap{
+    position:relative;
+    z-index:1;
+    max-width: 1580px;
+    margin: 70px auto 0;
+    padding: 0 clamp(24px, 6vw, 60px) 110px;
+  }
+
+  .courses-photo{
+    width:100%;
+    aspect-ratio: 16 / 8.6;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 30px 60px rgba(0,0,0,.18);
+  }
+
+  .course-card{
+    position:relative;
+    background: var(--white);
+    border-radius: 2px;
+    padding: 40px 30px 34px;
+    overflow:hidden;
+    cursor:pointer;
+    box-shadow: 0 4px 14px rgba(0,0,0,.06), 0 16px 36px rgba(0,0,0,.10);
+    transition: box-shadow .4s ease, transform .4s ease;
+  }
+
+  /* image layer — hidden until hover/tap, fades in (no slide) */
+  .course-card .card-media{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    background-size: cover;
+    background-position: center;
+    opacity:0;
+    transition: opacity .45s ease, transform .5s ease;
+  }
+
+  .course-card .card-media::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background: #000;
+    opacity: var(--card-overlay-opacity);
+  }
+
+  .course-card .card-body{
+    position:relative;
+    z-index:1;
+    color: var(--ink);
+    transition: color .4s ease;
+  }
+
+  .course-card h3{
+    font-family: var(--font-inter);
+    font-weight:600;
+    font-size: 1.5rem;
+    line-height:1.28;
+    margin-bottom: 18px;
+  }
+
+  .course-card p{
+    font-family: var(--font-inter);
+    font-weight:400;
+    font-size: .92rem;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  .course-card .read-more{
+    font-family: var(--font-inter);
+    font-weight:500;
+    font-size: .9rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* hover (desktop) and .is-open (tap, toggled by JS) share the same reveal */
+  .course-card:hover,
+  .course-card.is-open{
+    transform: scale(1.02);   /* the whole card grows slightly */
+    box-shadow: 0 10px 24px rgba(0,0,0,.10), 0 30px 60px rgba(0,0,0,.20);
+  }
+
+  .course-card:hover .card-media,
+  .course-card.is-open .card-media{
+    opacity:1;
+    transform: scale(1.06);   /* the photo itself pops out slightly — no border/frame */
+  }
+
+  .course-card:hover .card-body,
+  .course-card.is-open .card-body{
+    color: var(--white);
+  }
+
+  @media (max-width: 1024px){
+    .courses-grid{ grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 860px){
+    .about-inner,
+    .courses-header{ grid-template-columns:1fr; gap:24px; }
+    .about-gallery{ grid-template-columns:1fr; }
+    .main-nav{ display:none; } /* swap for a mobile menu button if needed */
+    .courses-bg-split{ height: 460px; }
+  }
+
+  @media (max-width: 768px){
+    /* background-attachment: fixed is unreliable on mobile browsers — scroll normally instead */
+    .hero-media{ background-attachment: scroll; }
+  }
+
+  @media (max-width: 600px){
+    .courses-grid{ grid-template-columns: 1fr; }
+    .courses-bg-split{ height: 380px; }
+    .courses-photo{ aspect-ratio: 4 / 3.4; }
+  }
+
+  @media (max-width: 560px){
+    .site-header{ padding: 20px; }
+    .header-actions .btn{ padding:10px 16px; font-size:.8rem; }
+    .hero-content p{ font-size:.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <div class="logo">
+    <span class="logo-mark">
+      <img src="images/logo.png" alt="Trinity Institute Of Technology logo">
+    </span>
+    <span class="logo-text">Trinity Institute Of Technology</span>
+  </div>
+
+  <div class="nav-group">
+    <nav class="main-nav">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About Us</a>
+      <a href="#admission">Admission</a>
+      <a href="#campus">Campus</a>
+      <a href="#contact">Contact Us</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="btn btn-outline-light" id="studentDeskBtn">Student Desk</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-media" role="img" aria-label="Trinity Institute Of Technology campus building"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <h1><span>Trinity</span><span>Institute Of Technology</span></h1>
+    <p>Trinity Institute Of Technology is a leading research university pushing boundaries and frontiers ever since its inception, join our rich heritage and be a part of history.</p>
+    <button class="btn btn-outline-light" id="contactBtn">Contact Us</button>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-heading section-heading">
+      <h2>About Institute</h2>
+    </div>
+    <div class="about-copy">
+      <p>At Trinity's beautiful campus, you'll find a diverse and welcoming community that will teach you life skills along with having fun. Dumbledore's eye for detail certainly helped narrow the whereabouts of Hogwarts origin, however, the "voldemort" still remain something of a mystery, with competing theories and timelines.</p>
+      <button class="btn btn-outline-dark">Discover More</button>
+    </div>
+  </div>
+
+  <div class="about-gallery">
+    <button class="gallery-item" type="button" data-full="images/about-home-1.png" aria-label="Open larger view of lecture hall photo">
+      <img src="images/about-home-1.png" alt="Lecture hall at Trinity Institute Of Technology">
+    </button>
+    <button class="gallery-item" type="button" data-full="images/about-home-2.png" aria-label="Open larger view of graduation photo">
+      <img src="images/about-home-2.png" alt="Graduation ceremony at Trinity Institute Of Technology">
+    </button>
+  </div>
+</section>
+
+<section class="courses" id="courses">
+  <div class="courses-bg-split" aria-hidden="true"></div>
+
+  <div class="courses-inner">
+    <div class="courses-header">
+      <div class="courses-heading section-heading">
+        <h2>Courses We Offer</h2>
+      </div>
+      <div class="courses-copy">
+        <p>Explore all the courses we offer and discover opportunities designed to help you learn, grow, and prepare for what comes next. With a diverse range of subjects, practical learning experiences, and a welcoming community, there's something for every interest and ambition. Find the course that inspires you, build valuable skills, and take the next step toward your future.</p>
+        <button class="btn btn-outline-dark">Discover All Courses</button>
+      </div>
+    </div>
+
+    <div class="courses-grid">
+      <article class="course-card" tabindex="0">
+        <div class="card-media" style="background-image:url('images/card1.png')"></div>
+        <div class="card-body">
+          <h3>Bachelor in<br>Computer Science</h3>
+          <p>Build a strong foundation in programming, software development, data, and emerging technologies.</p>
+          <a href="#" class="read-more">Read More</a>
+        </div>
+      </article>
+
+      <article class="course-card" tabindex="0">
+        <div class="card-media" style="background-image:url('images/card2.png')"></div>
+        <div class="card-body">
+          <h3>Bachelor in<br>Data Science</h3>
+          <p>Turn data into meaningful insights through statistics, programming, and modern analytical tools.</p>
+          <a href="#" class="read-more">Read More</a>
+        </div>
+      </article>
+
+      <article class="course-card" tabindex="0">
+        <div class="card-media" style="background-image:url('images/card3.png')"></div>
+        <div class="card-body">
+          <h3>Master in Data<br>Science Studies</h3>
+          <p>Advance your expertise in data analysis, research, and emerging data technologies.</p>
+          <a href="#" class="read-more">Read More</a>
+        </div>
+      </article>
+
+      <article class="course-card" tabindex="0">
+        <div class="card-media" style="background-image:url('images/card4.png')"></div>
+        <div class="card-body">
+          <h3>Master in<br>Business Studies</h3>
+          <p>Develop advanced knowledge in business strategy, leadership, and management. Gain practical skills to make decisions.</p>
+          <a href="#" class="read-more">Read More</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="courses-photo-wrap">
+      <img class="courses-photo" src="images/home-center.png" alt="Trinity Institute Of Technology graduation caps thrown in the air">
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox for the About gallery -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close image">&times;</button>
+  <img src="" alt="" id="lightboxImage">
+</div>
+
+<script>
+  // Smooth-scroll for in-page nav links + active-state swap on click.
+  document.querySelectorAll('.main-nav a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const targetId = link.getAttribute('href');
+      if (targetId.startsWith('#')) {
+        const target = document.querySelector(targetId);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+          document.querySelectorAll('.main-nav a').forEach(a => a.classList.remove('active'));
+          link.classList.add('active');
+        }
+      }
+    });
+  });
+
+  // Contact Us button -> jump to a #contact section
+  document.getElementById('contactBtn').addEventListener('click', () => {
+    const target = document.querySelector('#contact');
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // Lightbox: click an About gallery image to open it zoomed, with a scale/fade animation.
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  const lightboxClose = document.getElementById('lightboxClose');
+
+  function openLightbox(src, alt){
+    lightboxImage.src = src;
+    lightboxImage.alt = alt;
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(){
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.gallery-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const src = btn.getAttribute('data-full');
+      const alt = btn.querySelector('img').alt;
+      openLightbox(src, alt);
+    });
+  });
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+  // Course cards: tap-to-toggle reveal for touch devices (desktop already gets :hover).
+  document.querySelectorAll('.course-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return; // let the "Read More" link behave normally
+      card.classList.toggle('is-open');
+    });add
+  });
+</script>
+
+</body>
+</html>
