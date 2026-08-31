@@ -21,6 +21,7 @@
     --courses-tan: #F0DEC2;
     --stories-bg: #D7E6E5;
     --stories-stroke: #9FB8B6;
+    --admission-bg: #3E3A36;
     --card-overlay-opacity: 0.55;
     --ink: #231f20;
     --ink-soft: #4b4f40;
@@ -393,8 +394,8 @@
   .courses-bg-split{
     position:absolute;
     left:0; right:0;
-    bottom: 502px;
-    height: 632px;
+    bottom: 480px;
+    height: 540px;
     background: var(--courses-tan);
     z-index:0;
   }
@@ -563,7 +564,7 @@
   .stories-list-wrap{
     background: var(--white);
     padding: 90px clamp(24px, 5vw, 80px);
-    border: 15px solid var(--stories-bg);
+    border: 18px solid var(--stories-bg);
   }
 
   .stories-list{
@@ -614,6 +615,116 @@
     line-height: 1.75;
   }
 
+  /* ---------------------------------- ADMISSION ---------------------------------- */
+
+  .admission{
+    background: var(--white);
+    padding: 120px 0;
+  }
+
+  .admission-panel{
+    position:relative;
+    width: 100%;
+    min-height: 300px;
+    color: var(--white);
+  }
+
+  .admission-bg{
+    position:absolute;
+    inset: 0;
+    right: 35%;
+    background: var(--admission-bg);
+    border-radius: 0 40px 40px 0;
+    z-index:0;
+  }
+
+  .admission-content{
+    position:relative;
+    z-index:2;
+    max-width: 600px;
+    padding: 80px 64px;
+    transform: translateX(60px);
+}
+
+  .admission-content h2{
+    font-family: var(--font-display);
+    font-weight:500;
+    font-size: clamp(2rem, 3.2vw, 2.7rem);
+    color: var(--white);
+  }
+
+  .admission-content p{
+    margin-top: 22px;
+    max-width: 460px;
+    font-size: .98rem;
+    color: rgba(255,255,255,.75);
+    line-height: 1.8;
+  }
+
+  .admission-content .btn-outline-light{ margin-top: 32px; }
+
+  .admission-stats{
+    margin-top: 56px;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 48px;
+  }
+
+  .stat-icon{
+    display:inline-block;
+    width: 42px;
+    height: 42px;
+    color: rgba(255,255,255,.85);
+    margin-bottom: 14px;
+  }
+  .stat-icon svg{ display:block; width:100%; height:100%; }
+
+  .stat-number{
+    font-family: var(--font-inter);
+    font-weight:600;
+    font-size: 1.6rem;
+    color: var(--white);
+  }
+
+  .stat-label{
+    margin-top: 4px;
+    font-size: 1.0rem;
+    color: rgba(255,255,255,.65);
+  }
+
+  .admission-media{
+    position:absolute;
+    top: 30px;
+    bottom: 30px;
+    right: 0;
+    width: 60%;
+    z-index:1;
+  }
+
+  .admission-media img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+    border-radius: 28px 0 0 28px;  
+    box-shadow: 0 40px 80px rgba(0,0,0,.35);
+  }
+
+  @media (max-width: 900px){
+    .admission-panel{ min-height: auto; }
+    .admission-bg{ right: 0; border-radius: 0; }
+    .admission-content{ max-width: none; padding-bottom: 40px; }
+    .admission-media{
+      position:relative;
+      top:0; bottom:0; right:0;
+      width: 100%;
+      padding: 0 clamp(28px, 5vw, 64px) 60px;
+    }
+    .admission-media img{
+      height: 360px;
+      border-radius: 20px;
+    }
+  }
+
   @media (max-width: 1024px){
     .courses-grid{ grid-template-columns: 1fr 1fr; }
   }
@@ -630,7 +741,6 @@
   }
 
   @media (max-width: 768px){
-    /* background-attachment: fixed is unreliable on mobile browsers — scroll normally instead */
     .hero-media{ background-attachment: scroll; }
   }
 
@@ -823,7 +933,70 @@
   </div>
 </section>
 
-<!-- Lightbox for the About gallery -->
+<section class="admission" id="admission-panel">
+  <div class="admission-panel">
+    <div class="admission-bg" aria-hidden="true"></div>
+    <div class="admission-content">
+      <h2>Apply for Admission</h2>
+      <p>Shape the future of innovation. Join a global community of visionary thinkers, elite researchers, and next-generation leaders. Applications are now open for the incoming lectures.</p>
+      <button class="btn btn-outline-light">Apply Now</button>
+
+      <div class="admission-stats">
+        <div class="stat">
+          <span class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 5.5C4 4.67 4.67 4 5.5 4H12v16H5.5A1.5 1.5 0 0 1 4 18.5v-13z"/>
+              <path d="M20 5.5c0-.83-.67-1.5-1.5-1.5H12v16h6.5c.83 0 1.5-.67 1.5-1.5v-13z"/>
+            </svg>
+          </span>
+          <div class="stat-number">60 +</div>
+          <div class="stat-label">Courses Available</div>
+        </div>
+
+        <div class="stat">
+          <span class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3 2 8l10 5 10-5-10-5z"/>
+              <path d="M6 10.5V16c0 1.66 2.69 3 6 3s6-1.34 6-3v-5.5"/>
+              <path d="M22 8v6"/>
+            </svg>
+          </span>
+          <div class="stat-number">9,000+</div>
+          <div class="stat-label">Graduated Alumni</div>
+        </div>
+
+        <div class="stat">
+          <span class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="8" cy="8" r="2.6"/>
+              <path d="M2.5 19c0-3 2.4-5.2 5.5-5.2s5.5 2.2 5.5 5.2"/>
+              <circle cx="17" cy="9" r="2.1"/>
+              <path d="M14.8 13.8c2.6.2 4.7 2.2 4.7 4.9"/>
+            </svg>
+          </span>
+          <div class="stat-number">85 +</div>
+          <div class="stat-label">Expert Professors</div>
+        </div>
+
+        <div class="stat">
+          <span class="stat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/>
+            </svg>
+          </span>
+          <div class="stat-number">120+</div>
+          <div class="stat-label">Global Outreach</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="admission-media">
+      <img src="images/home-admission.png" alt="Students in a lecture hall at Trinity Institute Of Technology">
+    </div>
+  </div>
+</section>
+
 <div class="lightbox" id="lightbox" aria-hidden="true">
   <button class="lightbox-close" id="lightboxClose" aria-label="Close image">&times;</button>
   <img src="" alt="" id="lightboxImage">
